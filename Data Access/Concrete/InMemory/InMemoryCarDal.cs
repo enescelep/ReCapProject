@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Data_Access.Concrete.InMemory
 {
-    public class InMemoryCarDal : ICarDal
+    /*public class InMemoryCarDal : ICarDal
     {
         List<Car> _cars;
         public InMemoryCarDal()
@@ -30,7 +30,7 @@ namespace Data_Access.Concrete.InMemory
             _cars.Remove(carToDelete);
         }
 
-        public List<Car> GetAll()
+        /*public List<Car> GetAll()
         {
             return _cars;
         }
@@ -50,5 +50,5 @@ namespace Data_Access.Concrete.InMemory
             carToUpdate.ModelYear = car.ModelYear;
             carToUpdate.Description = car.Description;
         }
-    }
+    }*/
 }
