@@ -1,4 +1,5 @@
-﻿using Business.Concrete;
+﻿using Business.Abstract;
+using Business.Concrete;
 using Data_Access.Concrete.EntityFramework;
 using Entities.Concrete;
 using System;
@@ -12,11 +13,13 @@ namespace ConsoleUI
             //CarDetails();
             //ColorDetails();
             //BrandDetails();
-            ColorManager colorManager = new ColorManager(new EfColorDal());
-            colorManager.Add(new Color { ColorName = "Beyaz" });
-            //ColorDetails();
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
             CarManager carManager = new CarManager(new EfCarDal());
-            foreach (var cars in carManager.GetCarsByColorId(2))
+            ColorManager colorManager = new ColorManager(new EfColorDal());
+
+            ColorDetails();
+            CarManager carManager2 = new CarManager(new EfCarDal());
+            foreach (var cars in carManager2.GetCarsByColorId(2).Data)
             {
                 Console.WriteLine(cars.CarName);
             }
@@ -27,7 +30,7 @@ namespace ConsoleUI
         {
             BrandManager brandManager = new BrandManager(new EfBrandDal());
             Console.WriteLine("Marka adı | Marka ID");
-            foreach (var brands in brandManager.GetAll())
+            foreach (var brands in brandManager.GetAll().Data)
             {
                 Console.WriteLine("{0} | {1}", brands.BrandID, brands.BrandName);
             }
@@ -37,7 +40,7 @@ namespace ConsoleUI
         {
             ColorManager colorManager = new ColorManager(new EfColorDal());
             Console.WriteLine("Renk adı | Renk ID");
-            foreach (var colors in colorManager.GetAll())
+            foreach (var colors in colorManager.GetAll().Data)
             {
                 Console.WriteLine("{0} | {1}", colors.ColorName, colors.ColorID);
             }
@@ -47,7 +50,7 @@ namespace ConsoleUI
         {
             CarManager carManager = new CarManager(new EfCarDal());
             Console.WriteLine("ID | Renk ID | Marka ID | Araba Adı | Günlük Fiyatı | Açıklaması");
-            foreach (var cars in carManager.GetAll())
+            foreach (var cars in carManager.GetAll().Data)
             {
                 Console.WriteLine("{0} \t| {1} \t| {2} \t| {3} \t| {4} \t| {5}", cars.CarID
                     , cars.ColorID, cars.BrandID, cars.CarName,
