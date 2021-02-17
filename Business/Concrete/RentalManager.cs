@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
 using Core.Utilities.Results;
+using Data_Access.Abstract;
 using Data_Access.Concrete.EntityFramework;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -13,26 +14,26 @@ namespace Business.Concrete
 {
     public class RentalManager : IRentalService
     {
-        IRentalService _rentService;
-        public RentalManager(IRentalService rentService)
+        IRentalDal _rentalDal;
+        public RentalManager(IRentalDal rentalDal)
         {
-            _rentService = rentService;
+            _rentalDal = rentalDal;
         }
         public IResult Add(Rental rental)
         {
             if (rental.ReturnDate == null)
                 return new ErrorResult(Messages.RentalFailed);
 
-            _rentService.Add(rental);
-            return new SuccessResult(Messages.CarRent);
+            _rentalDal.Add(rental);
+            return new SuccessDataResult(Messages.CarRent);
         }
 
         public IResult Delete(Rental rental)
         {
             if (rental.CarID > 0)
             {
-                _rentService.Delete(rental);
-                return new SuccessResult(Messages.RentalDeleted);
+                _rentalDal.Delete(rental);
+                return new SuccessDataResult(Messages.RentalDeleted);
             }
             else
                 return new ErrorResult(Messages.RentalFailed);
@@ -40,14 +41,13 @@ namespace Business.Concrete
 
         public IDataResult<List<Rental>> GetAll()
         {
-            _rentService.GetAll();
-            return new SuccessDataResult<List<Rental>>(Messages.RentalsListed);
+            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(), Messages.RentalsListed);
         }
 
         public IResult Update(Rental rental)
         {
-            _rentService.Update(rental);
-            return new SuccessResult(Messages.RentalUpdated);
+            _rentalDal.Update(rental);
+            return new SuccessDataResult(Messages.RentalUpdated);
         }
     }
 }

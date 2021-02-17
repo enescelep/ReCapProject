@@ -10,20 +10,32 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            //CarDetails();
-            //ColorDetails();
-            //BrandDetails();
-            RentalManager rentalManager = new RentalManager(new EfRentalDal());
-            CarManager carManager = new CarManager(new EfCarDal());
-            ColorManager colorManager = new ColorManager(new EfColorDal());
+            // CarDetails();
+            // ColorDetails();
+            // BrandDetails();
+            //CustomerDetails();
+            RentalDetails();
 
-            ColorDetails();
-            CarManager carManager2 = new CarManager(new EfCarDal());
-            foreach (var cars in carManager2.GetCarsByColorId(2).Data)
+        }
+
+        private static void RentalDetails()
+        {
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            Console.WriteLine("Araba ID\t|\tMüşteri ID\t|\tKiralanma ID\t|\tKiralanma Tarihi\t|\tGeri Getirme Tarihi");
+            foreach (var rental in rentalManager.GetAll().Data)
             {
-                Console.WriteLine(cars.CarName);
+                Console.WriteLine("{0}\t|\t{1}\t|\t{2}\t|\t{3}\t|\t{4}", rental.CarID, rental.CustomerId, rental.RentalId, rental.RentDate, rental.ReturnDate);
             }
-            //carManager.GetCarsByColorId(1)
+        }
+
+        private static void CustomerDetails()
+        {
+            CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+            Console.WriteLine("Müşteri ID | Kurum Adı");
+            foreach (var customer in customerManager.GetAll().Data)
+            {
+                Console.WriteLine("{0} \t|\t {1}", customer.UserId, customer.CompanyName);
+            }
         }
 
         private static void BrandDetails()

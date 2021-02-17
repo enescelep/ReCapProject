@@ -1,6 +1,7 @@
 ﻿using Business.Constants;
 using Core.Utilities.Results;
 using Data_Access.Abstract;
+using Data_Access.Concrete.EntityFramework;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -9,21 +10,21 @@ namespace Business.Concrete
 {
     public class CustomerManager : ICustomerService
     {
-        ICustomerDal _customerDal;
-        public CustomerManager(ICustomerDal customerDal)
+        EfCustomerDal _customerDal;
+        public CustomerManager(EfCustomerDal customerDal)
         {
             _customerDal = customerDal;
         }
         public IResult Add(Customer customer)
         {
             _customerDal.Add(customer);
-            return new SuccessResult(Messages.CustomerAdded);
+            return new SuccessDataResult(Messages.CustomerAdded);
         }
 
         public IResult Delete(Customer customer)
         {
             _customerDal.Delete(customer);
-            return new SuccessResult(Messages.CustomerDeleted);
+            return new SuccessDataResult(Messages.CustomerDeleted);
         }
 
         public IDataResult<List<Customer>> GetAll()
@@ -35,7 +36,7 @@ namespace Business.Concrete
         public IResult Update(Customer customer)
         {
             _customerDal.Update(customer);
-            return new SuccessResult(Messages.CustomerUpdated);
+            return new SuccessDataResult(Messages.CustomerUpdated);
         }
     }
 }
