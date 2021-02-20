@@ -19,16 +19,38 @@ namespace WebAPI.Controllers
             _rentalService = rentalService;
         }
 
-       /* [HttpGet("getrentdetails")]
+        [HttpGet("getallrentals")]
+        public IActionResult GetAllRentals()
+        {
+            var result = _rentalService.GetAll();
+            if(result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("getrentdetails")]
         public IActionResult GetRentDetails()
         {
-            var result = _rentalService.GetRentalDetails();
+            var result = _rentalService.GetRentalDetail();
             if (result.Success)
             {
                 return Ok(result);
             }
             return BadRequest(result);
-        } */
+        } 
+
+        [HttpPost("delete")]
+        public IActionResult Delete (Rental rental)
+        {
+            var result = _rentalService.Delete(rental);
+            if(result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
 
         [HttpPost("rent")]
         public IActionResult Rent(Rental rental)
