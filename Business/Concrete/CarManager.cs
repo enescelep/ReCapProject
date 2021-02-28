@@ -28,7 +28,7 @@ namespace Business.Concrete
             else
             {
                 _carDal.Add(car);
-                return new SuccessDataResult(Messages.CarAdded);
+                return new SuccessResult(Messages.CarAdded);
             }
         }
 
@@ -41,7 +41,7 @@ namespace Business.Concrete
             else
             {
                 _carDal.Delete(car);
-                return new SuccessDataResult(Messages.CarDeleted);
+                return new SuccessResult(Messages.CarDeleted);
             }
         }
 
@@ -68,7 +68,7 @@ namespace Business.Concrete
         public IResult Update(Car car)
         {
             _carDal.Update(car);
-            return new SuccessDataResult( Messages.CarUpdated);
+            return new SuccessResult( Messages.CarUpdated);
         }
     }
 }

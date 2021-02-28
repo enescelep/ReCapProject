@@ -1,8 +1,10 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
 using Core.Utilities.Results;
 using Data_Access.Abstract;
 using Entities.Concrete;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,14 +20,19 @@ namespace Business.Concrete
         }
         public IResult Add(Brand brand)
         {
+            var context = new ValidationContext<Brand>(brand);
+            BrandValidator brandValidator = new BrandValidator();
+            var result = brandValidator.Validate(brand);
+            if(result.IsValid)
+
             _brandDal.Add(brand);
-            return new SuccessDataResult(Messages.BrandAdded);
+            return new SuccessResult(Messages.BrandAdded);
         }
 
         public IResult Delete(Brand brand)
         {
             _brandDal.Delete(brand);
-            return new SuccessDataResult(Messages.BrandDeleted);
+            return new SuccessResult(Messages.BrandDeleted);
         }
 
         public IDataResult<List<Brand>> GetAll()
@@ -41,7 +48,7 @@ namespace Business.Concrete
         public IResult Update(Brand brand)
         {
             _brandDal.Update(brand);
-            return new SuccessDataResult(Messages.BrandUpdated);
+            return new SuccessResult(Messages.BrandUpdated);
         }
     }
 }

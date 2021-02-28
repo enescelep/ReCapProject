@@ -25,7 +25,7 @@ namespace Business.Concrete
                 return new ErrorResult(Messages.RentalFailed);
 
             _rentalDal.Add(rental);
-            return new SuccessDataResult(Messages.CarRent);
+            return new SuccessResult(Messages.CarRent);
         }
 
         public IResult Delete(Rental rental)
@@ -33,7 +33,7 @@ namespace Business.Concrete
             if (rental.CarID > 0)
             {
                 _rentalDal.Delete(rental);
-                return new SuccessDataResult(Messages.RentalDeleted);
+                return new SuccessResult(Messages.RentalDeleted);
             }
             else
                 return new ErrorResult(Messages.RentalFailed);
@@ -44,7 +44,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(), Messages.RentalsListed);
         }
 
-        public IDataResult<List<RentalDetailDto>> GetRentalDetail()
+        public IDataResult<List<RentalDetailDto>> GetRentalDetail(Expression<Func<Rental, bool>> filter = null)
         {
             return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetails());
         }
@@ -52,7 +52,7 @@ namespace Business.Concrete
         public IResult Update(Rental rental)
         {
             _rentalDal.Update(rental);
-            return new SuccessDataResult(Messages.RentalUpdated);
+            return new SuccessResult(Messages.RentalUpdated);
         }
     }
 }
